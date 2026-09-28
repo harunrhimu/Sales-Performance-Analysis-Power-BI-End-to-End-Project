@@ -1,0 +1,33 @@
+/// General-ledger fact at month x account grain. Drives the P&L layout via Dim Financial Accounts.SignModifier.
+table 'Fact Financials'
+	lineageTag: a584db3b-6db8-4672-8405-51e94caed712
+
+	column 'Date Key'
+		dataType: int64
+		isHidden
+		lineageTag: 86aac578-3195-4c0b-b05e-ac1ab5cae17f
+		sourceColumn: Date Key
+
+	column 'Account Key'
+		dataType: int64
+		isHidden
+		lineageTag: 7c22df46-81bf-4193-8ebb-db0faca62734
+		sourceColumn: Account Key
+
+	/// General-ledger amount at month x account grain, unsigned. Use [P&L Amount] (sign-adjusted), never this column directly.
+	column Amount
+		dataType: decimal
+		lineageTag: 12590cc6-dac8-48ef-be8e-6a2cdbb0cb4e
+		sourceColumn: Amount
+
+	partition 'Fact Financials' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pSeedDataFolder & "\Fact_Financials.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Renamed = Table.RenameColumns(Promoted, {{"DateKey", "Date Key"}, {"AccountKey", "Account Key"}}),
+				    Typed = Table.TransformColumnTypes(Renamed, {{"Date Key", Int64.Type}, {"Account Key", Int64.Type}, {"Amount", type number}})
+				in
+				    Typed
+

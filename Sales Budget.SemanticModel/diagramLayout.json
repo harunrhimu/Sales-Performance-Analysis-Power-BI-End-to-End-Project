@@ -1,0 +1,204 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 56.044339967678354,
+            "y": 82.687747835586109
+          },
+          "nodeIndex": "Dim Customer",
+          "nodeLineageTag": "706864cf-ba2b-478f-97fb-8ebc05908895",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 908.75695476874785,
+            "y": 79.865502158937147
+          },
+          "nodeIndex": "Dim Date",
+          "nodeLineageTag": "cc9d7fcc-1807-47d6-b352-88fd57da5f65",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1473.6271500664841,
+            "y": 73.36950766121862
+          },
+          "nodeIndex": "Dim Financial Accounts",
+          "nodeLineageTag": "791413e3-ee28-4448-9454-228c34db479f",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 341.52455845400209,
+            "y": 73.328631055762571
+          },
+          "nodeIndex": "Dim Product",
+          "nodeLineageTag": "f63f29fa-51de-4af8-a234-c6a41e88174c",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 870.92241203810374,
+            "y": 688.64784413617485
+          },
+          "nodeIndex": "Fact Budget",
+          "nodeLineageTag": "39fae2f6-6192-4c85-affb-4d9c93c063a3",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 124.71233291556831,
+            "y": 633.024750914783
+          },
+          "nodeIndex": "Fact Sales",
+          "nodeLineageTag": "f8f7b4c5-fc81-4dbc-82c2-693e2c90255e",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 536.71979743871327,
+            "y": 695.604049105991
+          },
+          "nodeIndex": "Fact Target",
+          "nodeLineageTag": "7ef5ad6c-5aeb-4e44-97a0-8043bfbd75a6",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1195.7384224205794,
+            "y": 72.679262511307627
+          },
+          "nodeIndex": "Dim Category",
+          "nodeLineageTag": "a61a5ac5-9363-48d9-a86e-09d25e9a715b",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 624.67563501152756,
+            "y": 76.64340786790774
+          },
+          "nodeIndex": "Dim Scenario",
+          "nodeLineageTag": "be86fd7d-e2e1-468a-82f5-39c62c560aa5",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1195.8730366459372,
+            "y": 696.2784595814893
+          },
+          "nodeIndex": "Fact Financials",
+          "nodeLineageTag": "a584db3b-6db8-4672-8405-51e94caed712",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1701.5828100988058,
+            "y": 273.68881413444421
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "92cf89c0-df37-4b6c-bfe1-f0b389e8161f",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1985.5828100988058,
+            "y": 347.68881413444421
+          },
+          "nodeIndex": "Dimension Selector",
+          "nodeLineageTag": "e5331d13-abb2-44f4-82db-314677aed909",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2269.5828100988056,
+            "y": 347.68881413444421
+          },
+          "nodeIndex": "Metric Selector",
+          "nodeLineageTag": "0a19868d-fa1b-4745-ae88-8eabd9d64e00",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2553.5828100988056,
+            "y": 323.68881413444421
+          },
+          "nodeIndex": "Top N Selector",
+          "nodeLineageTag": "8093f9ed-9c72-4849-b9e6-f2d5ae251084",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 49.633210839268891,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

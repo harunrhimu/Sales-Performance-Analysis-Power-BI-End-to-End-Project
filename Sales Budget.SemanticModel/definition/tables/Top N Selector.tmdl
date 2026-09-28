@@ -1,0 +1,15 @@
+/// Slicer source for the Dynamic Top N ranking measure. Values 5 to 50 in steps of 5.
+table 'Top N Selector'
+	lineageTag: 8093f9ed-9c72-4849-b9e6-f2d5ae251084
+
+	/// Slicer values 5-50 in steps of 5 feeding [Top N Selected] (defaults to 10). Helper - not business data.
+	column 'Top N'
+		lineageTag: 1ab4824a-134c-455a-96ab-7628b62b3dad
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Top N]
+
+	partition 'Top N Selector' = calculated
+		mode: import
+		source = SELECTCOLUMNS(GENERATESERIES(5, 50, 5), "Top N", [Value])
+

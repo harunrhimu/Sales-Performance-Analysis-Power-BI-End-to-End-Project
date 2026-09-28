@@ -1,0 +1,44 @@
+relationship 'Fact Sales_Date Key_Dim Date_Date Key'
+	fromColumn: 'Fact Sales'.'Date Key'
+	toColumn: 'Dim Date'.'Date Key'
+
+relationship 'Fact Sales_Customer Key_Dim Customer_Customer Key'
+	fromColumn: 'Fact Sales'.'Customer Key'
+	toColumn: 'Dim Customer'.'Customer Key'
+
+relationship 'Fact Sales_Product Key_Dim Product_Product Key'
+	fromColumn: 'Fact Sales'.'Product Key'
+	toColumn: 'Dim Product'.'Product Key'
+
+relationship 'Fact Budget_Date Key_Dim Date_Date Key'
+	fromColumn: 'Fact Budget'.'Date Key'
+	toColumn: 'Dim Date'.'Date Key'
+
+relationship 'Fact Target_Date Key_Dim Date_Date Key'
+	fromColumn: 'Fact Target'.'Date Key'
+	toColumn: 'Dim Date'.'Date Key'
+
+relationship 'Dim Product_Category_Dim Category_Category'
+	fromColumn: 'Dim Product'.Category
+	toColumn: 'Dim Category'.Category
+
+relationship 'Fact Budget_Category_Dim Category_Category'
+	fromColumn: 'Fact Budget'.Category
+	toColumn: 'Dim Category'.Category
+
+relationship 'Fact Target_Category_Dim Category_Category'
+	fromColumn: 'Fact Target'.Category
+	toColumn: 'Dim Category'.Category
+
+relationship 'Fact Target_Scenario_Dim Scenario_Scenario'
+	fromColumn: 'Fact Target'.Scenario
+	toColumn: 'Dim Scenario'.Scenario
+
+relationship 'Fact Financials_Account Key_Dim Financial Accounts_Account Key'
+	fromColumn: 'Fact Financials'.'Account Key'
+	toColumn: 'Dim Financial Accounts'.'Account Key'
+
+relationship 'Fact Financials_Date Key_Dim Date_Date Key'
+	fromColumn: 'Fact Financials'.'Date Key'
+	toColumn: 'Dim Date'.'Date Key'
+

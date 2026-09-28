@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
+  "pageOrder": [
+    "12ae5dea020be7a6210c",
+    "p2_variance",
+    "p3_timeseries",
+    "p4_scenario",
+    "p5_segmentation",
+    "p6_pareto",
+    "p7_pl",
+    "p8_quadrant",
+    "p9_fieldparams",
+    "p10_forecast",
+    "p11_outliers"
+  ],
+  "activePageName": "12ae5dea020be7a6210c",
+  "landingPageName": "12ae5dea020be7a6210c"
+}
