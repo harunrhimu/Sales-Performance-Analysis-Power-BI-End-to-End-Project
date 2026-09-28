@@ -1,0 +1,61 @@
+/// Customer dimension with Segment, City and Country attributes.
+table 'Dim Customer'
+	lineageTag: 706864cf-ba2b-478f-97fb-8ebc05908895
+
+	column 'Customer Key'
+		dataType: int64
+		isHidden
+		lineageTag: 05e771dc-4434-4346-bd90-829915195c10
+		sourceColumn: Customer Key
+
+	/// Customer name. Natural label for customer-level analysis; count distinct customers with [Active Customers] rather than counting this column.
+	column Customer
+		dataType: string
+		lineageTag: a6cd8dce-1ef7-4cb8-9364-236e5bb6efe2
+		sourceColumn: Customer
+
+	/// Customer segment grouping from the source; use with [Segment Share %] for segment-level share analysis.
+	column Segment
+		dataType: string
+		lineageTag: 11a0bc1c-a008-48c9-940b-475749d7b4c3
+		sourceColumn: Segment
+
+	/// Customer city; map-ready (data category City).
+	column City
+		dataType: string
+		lineageTag: e09a34b7-0092-437f-b0ae-fcb1bace6627
+		dataCategory: City
+		sourceColumn: City
+
+	/// Customer country; map-ready (data category Country) for geographic breakdowns.
+	column Country
+		dataType: string
+		lineageTag: 0b4f4a0b-c20d-4a84-874b-8c42e068594c
+		dataCategory: Country
+		sourceColumn: Country
+
+	/// Customer geography drill path.
+	hierarchy Geography
+		lineageTag: ab39c761-fe83-46ec-b427-d599357da2cc
+
+		level Country
+			lineageTag: 5da35083-1600-4a61-9ea2-bb5d72078504
+			column: Country
+
+		level City
+			lineageTag: 693044df-8ba4-4af8-b273-cf437a719998
+			column: City
+
+	partition 'Dim Customer' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pSeedDataFolder & "\Dim_Customer.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Renamed = Table.RenameColumns(Promoted, {{"CustomerKey", "Customer Key"}, {"CustomerName", "Customer"}}),
+				    Typed = Table.TransformColumnTypes(Renamed, {{"Customer Key", Int64.Type}, {"Customer", type text}, {"Segment", type text}, {"City", type text}, {"Country", type text}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

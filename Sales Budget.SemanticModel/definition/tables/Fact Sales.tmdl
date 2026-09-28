@@ -1,0 +1,53 @@
+/// Sales fact at daily transaction grain, keyed to Date, Customer and Product.
+table 'Fact Sales'
+	lineageTag: f8f7b4c5-fc81-4dbc-82c2-693e2c90255e
+
+	column 'Date Key'
+		dataType: int64
+		isHidden
+		lineageTag: edd90c5e-74aa-4ff8-8b30-4c18a5c7171f
+		sourceColumn: Date Key
+
+	column 'Customer Key'
+		dataType: int64
+		isHidden
+		lineageTag: e776187d-bb74-46b5-b15d-263357dda0c3
+		sourceColumn: Customer Key
+
+	column 'Product Key'
+		dataType: int64
+		isHidden
+		lineageTag: f0eeb9e7-9d9f-4b9b-a993-3ecc166274e3
+		sourceColumn: Product Key
+
+	/// Units sold in the transaction; additive at day grain. Base for [Total Quantity] and [Avg Selling Price].
+	column 'Sales Quantity'
+		dataType: int64
+		lineageTag: 4aea0d02-4ba8-4a92-ade3-a205f0879e2b
+		sourceColumn: Sales Quantity
+
+	/// Gross sales value of the transaction. Additive; base for [Total Sales] and all margin and variance measures.
+	column 'Sales Amount'
+		dataType: decimal
+		lineageTag: 10fdb8fa-b388-4e6b-8755-6b08ab52bcb6
+		sourceColumn: Sales Amount
+
+	/// Cost of goods sold for the transaction. Additive; base for [Total Cost] and [Total Margin].
+	column 'Cost Amount'
+		dataType: decimal
+		lineageTag: daaa3ff3-f1b8-48dd-94c4-87549445a8b7
+		sourceColumn: Cost Amount
+
+	partition 'Fact Sales' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pSeedDataFolder & "\Fact_Sales.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Renamed = Table.RenameColumns(Promoted, {{"DateKey", "Date Key"}, {"CustomerKey", "Customer Key"}, {"ProductKey", "Product Key"}, {"SalesQuantity", "Sales Quantity"}, {"SalesAmount", "Sales Amount"}, {"CostAmount", "Cost Amount"}}),
+				    Typed = Table.TransformColumnTypes(Renamed, {{"Date Key", Int64.Type}, {"Customer Key", Int64.Type}, {"Product Key", Int64.Type}, {"Sales Quantity", Int64.Type}, {"Sales Amount", type number}, {"Cost Amount", type number}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

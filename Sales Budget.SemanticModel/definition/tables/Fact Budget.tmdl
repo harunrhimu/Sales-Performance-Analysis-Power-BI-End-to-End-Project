@@ -1,0 +1,36 @@
+/// Budget fact at month x Category grain. Deliberately coarser than Fact Sales.
+table 'Fact Budget'
+	lineageTag: 39fae2f6-6192-4c85-affb-4d9c93c063a3
+
+	column 'Date Key'
+		dataType: int64
+		isHidden
+		lineageTag: 02810dac-9da2-4bc8-b5b5-36d3fd9d27ee
+		sourceColumn: Date Key
+
+	/// Category the budget line applies to (grain: month x category). Filter via Dim Category[Category] instead so Sales filters too.
+	column Category
+		dataType: string
+		isHidden
+		lineageTag: faf0754b-9f79-42f8-a76a-9900016582e5
+		sourceColumn: Category
+
+	/// Budgeted sales value at month x category grain. Additive; base for [Budget Sales] and all budget variance measures.
+	column 'Budget Amount'
+		dataType: decimal
+		lineageTag: e0e5511c-f81b-4dbe-87bb-235caa36a0de
+		sourceColumn: Budget Amount
+
+	partition 'Fact Budget' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pSeedDataFolder & "\Fact_Budget.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Renamed = Table.RenameColumns(Promoted, {{"DateKey", "Date Key"}, {"BudgetAmount", "Budget Amount"}}),
+				    Typed = Table.TransformColumnTypes(Renamed, {{"Date Key", Int64.Type}, {"Category", type text}, {"Budget Amount", type number}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

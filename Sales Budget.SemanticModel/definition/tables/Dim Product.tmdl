@@ -1,0 +1,71 @@
+/// Product dimension with Category and Subcategory hierarchy.
+table 'Dim Product'
+	lineageTag: f63f29fa-51de-4af8-a234-c6a41e88174c
+
+	column 'Product Key'
+		dataType: int64
+		isHidden
+		lineageTag: b7dec8c5-fbda-40fb-bd0d-98371dc016fc
+		sourceColumn: Product Key
+
+	/// Product name (model + variant, e.g. Laptops Model C). Natural label for top-N, Pareto and product-level analysis.
+	column Product
+		dataType: string
+		lineageTag: 8f67e7c2-9328-4fa8-8e40-a065dce6c46e
+		sourceColumn: Product
+
+	/// Product category on this product row. For slicing Sales together with Budget and Target, use Dim Category[Category] instead so all three facts filter.
+	column Category
+		dataType: string
+		lineageTag: 8df23fb9-ca87-4217-808d-1863d604172e
+		sourceColumn: Category
+
+	/// Product subcategory within a category; finer grouping for product analysis (Sales only - budget and target are at category grain).
+	column Subcategory
+		dataType: string
+		lineageTag: 7ef887ee-16cf-4099-bd6e-572affdeee04
+		sourceColumn: Subcategory
+
+	/// List unit price of the product at model load. Attribute for price analysis; do not aggregate (SummarizeBy is None).
+	column 'Unit Price'
+		dataType: decimal
+		lineageTag: 5a46f158-7c48-42e5-8aad-350dcd3bf743
+		summarizeBy: none
+		sourceColumn: Unit Price
+
+	/// Unit cost of the product at model load. Attribute for margin drivers; do not aggregate (SummarizeBy is None).
+	column 'Unit Cost'
+		dataType: decimal
+		lineageTag: a4d65080-32be-4e85-9190-60917e80b425
+		summarizeBy: none
+		sourceColumn: Unit Cost
+
+	/// Product drill path from category down to individual product.
+	hierarchy 'Product Hierarchy'
+		lineageTag: 639e8732-3763-466d-a00a-f35a02b2f268
+
+		level Category
+			lineageTag: 11820a29-7929-46d1-b4cb-ccc3d6eeaca9
+			column: Category
+
+		level Subcategory
+			lineageTag: bc86e963-8a58-468f-84f5-0f23bc4df6f7
+			column: Subcategory
+
+		level Product
+			lineageTag: c0086cd4-56c4-4bc6-8722-8d1c20342a64
+			column: Product
+
+	partition 'Dim Product' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pSeedDataFolder & "\Dim_Product.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Renamed = Table.RenameColumns(Promoted, {{"ProductKey", "Product Key"}, {"ProductName", "Product"}, {"SubCategory", "Subcategory"}, {"UnitPrice", "Unit Price"}, {"UnitCost", "Unit Cost"}}),
+				    Typed = Table.TransformColumnTypes(Renamed, {{"Product Key", Int64.Type}, {"Product", type text}, {"Category", type text}, {"Subcategory", type text}, {"Unit Price", type number}, {"Unit Cost", type number}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

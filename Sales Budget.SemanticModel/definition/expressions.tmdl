@@ -1,0 +1,6 @@
+/// Root folder path containing the seed data CSV files (Dim_* and Fact_*). Change this single value to repoint every table at a new source folder.
+expression pSeedDataFolder = "H:\Data Analyst\Core Analysis Portfolio\seed_data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 87cb3e1e-b19e-42c8-8c90-f8e38a141c8d
+
+	annotation PBI_ResultType = Text
+

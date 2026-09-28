@@ -1,0 +1,45 @@
+/// Field-parameter table driving the dimension slicer: exposes Category, Segment, City, Product and Subcategory for dynamic axis switching. Helper - not business data.
+table 'Dimension Selector'
+	lineageTag: e5331d13-abb2-44f4-82db-314677aed909
+
+	column 'Dimension Selector Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d39dc344-7497-412a-9a82-65cca55a62f8
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+	column 'Dimension Selector Fields'
+		dataType: string
+		isHidden
+		lineageTag: 2618e25c-0aa6-4c8e-a369-a057f9b6f879
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Dimension Selector Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+	/// Selected dimension label from the field parameter; drives dynamic axis switching. Helper - not business data.
+	column 'Dimension Selector'
+		dataType: string
+		lineageTag: 8e134da0-20ab-4351-af7e-4a86d58f9e7d
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Dimension Selector Order'
+
+	partition 'Dimension Selector' = calculated
+		mode: import
+		source =
+				{
+				    ("Category", NAMEOF('Dim Category'[Category]), 0),
+				    ("Segment", NAMEOF('Dim Customer'[Segment]), 1),
+				    ("City", NAMEOF('Dim Customer'[City]), 2),
+				    ("Product", NAMEOF('Dim Product'[Product]), 3),
+				    ("Subcategory", NAMEOF('Dim Product'[Subcategory]), 4)
+				}
+
